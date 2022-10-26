@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import wallpaper from './assets/images/wallpaper.webp';
 
 export default function App() {
     return (
-        <View className="flex-1 items-center justify-center bg-white">
-            <Text>Open up App.js to start working on your app!</Text>
+        <ImageBackground source={wallpaper} style={styles.container} className="">
+
             <StatusBar style="auto" />
-        </View>
+        </ImageBackground>
     );
 }
 
