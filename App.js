@@ -9,9 +9,10 @@ export default function App() {
     const [date, setDate] = useState(dayjs());
 
     useEffect(() => {
-        setInterval(() => {
+        const interval = setInterval(() => {
             setDate(dayjs());
         }, 1000);
+        return () => clearInterval(interval);
     }, []);
 
     return (
