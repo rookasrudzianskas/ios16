@@ -15,11 +15,11 @@ export default function App() {
             {/* Notification List*/}
 
             <View style={styles.footer}>
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
                     <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
                 </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
                     <Ionicons name={"ios-camera"} size={24} color={'white'} />
                 </TouchableOpacity>
             </View>
@@ -49,5 +49,17 @@ const styles = StyleSheet.create({
         fontSize: 82,
         fontWeight: 'bold',
         color: '#C3FFFE',
+    },
+    footer: {
+        flexDirection: 'row',
+        marginTop: 'auto',
+    },
+    icon: {
+        backgroundColor: '#00000050',
+        width: 50,
+        aspectRatio: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
     }
 });
