@@ -27,7 +27,7 @@ const NotificationList = ({ footerVisibility, ...flatListProps }) => {
         },
         onEndDrag: (event) => {
             if(event.contentOffset.y < 0) {
-                listVisibility.value = withSpring(0);
+                listVisibility.value = withTiming(0);
             }
         }
     });

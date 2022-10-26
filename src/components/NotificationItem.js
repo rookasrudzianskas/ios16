@@ -7,12 +7,13 @@ export const NOTIFICATION_HEIGHT = 80;
 
 const NotificationItem = ({data, index, listVisibility}) => {
     const { height } = useWindowDimensions();
+    const containerHeight = height - 250 - 85;
     const startPosition = NOTIFICATION_HEIGHT  * index;
 
     const animatedStyle = useAnimatedStyle(() => {
         return {
             transform: [{
-                translateY: interpolate(listVisibility.value, [0, 1], [700 - startPosition, 0])
+                translateY: interpolate(listVisibility.value, [0, 1], [containerHeight - startPosition, 0])
             }]
         }
     });
