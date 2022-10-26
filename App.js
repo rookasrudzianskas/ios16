@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import wallpaper from './assets/images/wallpaper.webp';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import dayjs from "dayjs";
 
 export default function App() {
     return (
@@ -9,7 +10,7 @@ export default function App() {
             <View style={styles.header}>
                 <Ionicons name="ios-lock-closed" size={20} color="white" />
                 <Text style={styles.date}>Friday, 30 September</Text>
-                <Text style={styles.time}>11:54</Text>
+                <Text style={styles.time}>{dayjs().format("hh:mm")}</Text>
             </View>
 
             {/* Notification List*/}
