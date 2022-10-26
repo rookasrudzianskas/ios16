@@ -5,12 +5,20 @@ import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
 import {useEffect, useState} from "react";
 import NotificationList from "./src/components/NotificationList";
-import Animated, {interpolate, SlideInDown, SlideInUp, useAnimatedStyle, useSharedValue} from "react-native-reanimated";
+import Animated, {
+    interpolate,
+    SlideInDown,
+    SlideInUp,
+    useAnimatedStyle,
+    useDerivedValue,
+    useSharedValue
+} from "react-native-reanimated";
 import SwipeUpToOpen from "./src/components/SwipeUpToOpen";
 
 export default function App() {
     const [date, setDate] = useState(dayjs());
     const footerVisibility = useSharedValue(1);
+    const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]))
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -30,6 +38,7 @@ export default function App() {
             {/* Notification List*/}
             <NotificationList
                 footerVisibility={footerVisibility}
+                footerHeight={footerHeight}
                 ListHeaderComponent={() => (
                     <Animated.View
                         // entering={SlideInUp}
@@ -41,17 +50,17 @@ export default function App() {
                 )}
             />
 
-            {/*<Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>*/}
-            {/*    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>*/}
-            {/*        <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />*/}
-            {/*    </TouchableOpacity>*/}
+            <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
+                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                    <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
+                </TouchableOpacity>
 
-            {/*    <SwipeUpToOpen />*/}
+                <SwipeUpToOpen />
 
-            {/*    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>*/}
-            {/*        <Ionicons name={"ios-camera"} size={24} color={'white'} />*/}
-            {/*    </TouchableOpacity>*/}
-            {/*</Animated.View>*/}
+                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                    <Ionicons name={"ios-camera"} size={24} color={'white'} />
+                </TouchableOpacity>
+            </Animated.View>
             <StatusBar style="light" />
         </ImageBackground>
     );

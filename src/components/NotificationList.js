@@ -5,7 +5,7 @@ import NotificationItem from "./NotificationItem";
 import notifications from "../../assets/data/notifications";
 import Animated, {useAnimatedScrollHandler, useSharedValue, withSpring, withTiming} from "react-native-reanimated";
 
-const NotificationList = ({ footerVisibility, ...flatListProps }) => {
+const NotificationList = ({ footerVisibility, footerHeight, ...flatListProps }) => {
     const {height} = useWindowDimensions();
     const listVisibility = useSharedValue(1);
     const scrollY = useSharedValue(0);
@@ -40,7 +40,7 @@ const NotificationList = ({ footerVisibility, ...flatListProps }) => {
             data={notifications}
             showsVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
-                <NotificationItem data={item} index={index} listVisibility={listVisibility} scrollY={scrollY} />
+                <NotificationItem data={item} index={index} listVisibility={listVisibility} scrollY={scrollY} footerHeight={footerHeight} />
             )}
             {...flatListProps}
             onScroll={handler}

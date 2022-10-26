@@ -1,60 +1,69 @@
 //@ts-nocheck
 import React from 'react';
 import {Text, View, StyleSheet, Image, Pressable, TouchableOpacity, useWindowDimensions} from 'react-native';
-import Animated, {Extrapolate, interpolate, useAnimatedStyle, withTiming} from "react-native-reanimated";
+import Animated, {
+    Extrapolate,
+    interpolate,
+    useAnimatedStyle,
+    useDerivedValue,
+    withTiming
+} from "react-native-reanimated";
 
 export const NOTIFICATION_HEIGHT = 80;
 
-const NotificationItem = ({data, index, listVisibility, scrollY}) => {
+const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) => {
     const { height } = useWindowDimensions();
-    const containerHeight = height - 250 - 85;
+    const containerHeight = useDerivedValue(
+        () => height - 250 - footerHeight.value
+    );
     const startPosition = NOTIFICATION_HEIGHT  * index;
 
     const animatedStyle = useAnimatedStyle(() => {
-        const pos1 = startPosition - containerHeight;
-        const pos2 = startPosition + NOTIFICATION_HEIGHT - containerHeight;
+        const pos1 = startPosition - containerHeight.value;
+        const pos2 = startPosition + NOTIFICATION_HEIGHT - containerHeight.value;
 
-        return {
-            opacity: interpolate(scrollY.value,
-                [
-                        pos1,
-                        pos2
-                    ],
-                [0, 1]),
-            transform: [
-                {
-                    translateY: interpolate(scrollY.value,
-                        [pos1, pos2],
-                        [-NOTIFICATION_HEIGHT / 2, 0],
-                        Extrapolate.CLAMP
-                    )
-                },
-                {
-                    scale: interpolate(
-                        scrollY.value,
-                        [pos1, pos2],
-                        [0.8, 1],
-                        Extrapolate.CLAMP
-                    ),
-                }
-            ]
+        if(listVisibility.value >= 1) {
+            // we are animating the last visible item
+            return {
+                opacity: interpolate(scrollY.value, [pos1, pos2], [0, 1]),
+                transform: [
+                    {
+                        translateY: interpolate(
+                            scrollY.value,
+                            [pos1, pos2],
+                            [-NOTIFICATION_HEIGHT / 2, 0],
+                            Extrapolate.CLAMP
+                        ),
+                    },
+                    {
+                        scale: interpolate(
+                            scrollY.value,
+                            [pos1, pos2],
+                            [0.8, 1],
+                            Extrapolate.CLAMP
+                        ),
+                    },
+                ],
+            };
+        } else {
+            // animate all items to hide them
+            return {
+                transform: [
+                    {
+                        translateY: interpolate(
+                            listVisibility.value,
+                            [0, 1],
+                            [containerHeight.value - startPosition, 0]
+                        ),
+                    },
+                    {
+                        scale: interpolate(listVisibility.value, [0, 1], [0.5, 1]),
+                    },
+                ],
+                opacity: listVisibility.value,
+            };
         }
     });
-
-    // const animatedStyle = useAnimatedStyle(() => {
-    //     return {
-    //         transform: [
-    //             {
-    //                 translateY: interpolate(listVisibility.value, [0, 1], [containerHeight - startPosition, 0])
-    //             },
-    //             {
-    //                 scale: interpolate(listVisibility.value, [0, 1], [0.8, 1])
-    //             },
-    //         ],
-    //         opacity: listVisibility.value,
-    //     }
-    // });
-
 
 
     return (
