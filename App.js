@@ -3,7 +3,7 @@ import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import wallpaper from './assets/images/wallpaper.webp';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import NotificationList from "./src/components/NotificationList";
 import Animated, {
     interpolate,
@@ -33,21 +33,24 @@ export default function App() {
         opacity: footerVisibility.value,
     }));
 
+    const Header = useMemo(
+        () => (
+            <Animated.View entering={SlideInUp} style={styles.header}>
+                <Ionicons name="ios-lock-closed" size={20} color="white" />
+                <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
+                <Text style={styles.time}>{date.format("hh:mm")}</Text>
+            </Animated.View>
+        ),
+        [date]
+    );
+
     return (
         <ImageBackground source={wallpaper} style={styles.container} className="">
             {/* Notification List*/}
             <NotificationList
                 footerVisibility={footerVisibility}
                 footerHeight={footerHeight}
-                ListHeaderComponent={() => (
-                    <Animated.View
-                        // entering={SlideInUp}
-                        style={styles.header}>
-                        <Ionicons name="ios-lock-closed" size={20} color="white" />
-                        <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
-                        <Text style={styles.time}>{date.format("hh:mm")}</Text>
-                    </Animated.View>
-                )}
+                ListHeaderComponent={Header}
             />
 
             <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>

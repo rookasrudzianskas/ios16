@@ -12,6 +12,7 @@ import Animated, {
 export const NOTIFICATION_HEIGHT = 80;
 
 const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) => {
+    const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
     const { height } = useWindowDimensions();
     const containerHeight = useDerivedValue(
         () => height - 250 - footerHeight.value
@@ -66,7 +67,7 @@ const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) 
     });
 
     return (
-        <Animated.View style={[styles.container,
+        <AnimatedTouchable activeOpacity={0.7} style={[styles.container,
             animatedStyle
         ]}>
             {/*<TouchableOpacity activeOpacity={0.7} style={styles.container}>*/}
@@ -77,7 +78,7 @@ const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) 
                 </View>
                 <Text style={styles.time}>{data.createdAt || 'Loading..'} ago</Text>
             {/*</TouchableOpacity>*/}
-        </Animated.View>
+        </AnimatedTouchable>
     );
 };
 
