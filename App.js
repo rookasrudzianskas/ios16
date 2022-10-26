@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import {useEffect, useState} from "react";
 import NotificationList from "./src/components/NotificationList";
 import Animated, {SlideInDown, SlideInUp} from "react-native-reanimated";
+import SwipeUpToOpen from "./src/components/SwipeUpToOpen";
 
 export default function App() {
     const [date, setDate] = useState(dayjs());
@@ -35,11 +36,12 @@ export default function App() {
                     <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
                 </TouchableOpacity>
 
+                <SwipeUpToOpen />
+
                 <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
                     <Ionicons name={"ios-camera"} size={24} color={'white'} />
                 </TouchableOpacity>
             </Animated.View>
-
             <StatusBar style="light" />
         </ImageBackground>
     );
