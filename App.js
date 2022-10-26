@@ -3,14 +3,23 @@ import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import wallpaper from './assets/images/wallpaper.webp';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
+import {useEffect, useState} from "react";
 
 export default function App() {
+    const [date, setDate] = useState(dayjs());
+
+    useEffect(() => {
+        setInterval(() => {
+            setDate(dayjs());
+        }, 1000);
+    }, []);
+
     return (
         <ImageBackground source={wallpaper} style={styles.container} className="">
             <View style={styles.header}>
                 <Ionicons name="ios-lock-closed" size={20} color="white" />
-                <Text style={styles.date}>{dayjs().format("dddd, DD MMMM")}</Text>
-                <Text style={styles.time}>{dayjs().format("hh:mm")}</Text>
+                <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
+                <Text style={styles.time}>{date.format("hh:mm")}</Text>
             </View>
 
             {/* Notification List*/}
