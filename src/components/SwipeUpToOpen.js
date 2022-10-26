@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import Animated, {useAnimatedStyle, withRepeat, withSequence, withTiming} from "react-native-reanimated";
+import Animated, {useAnimatedStyle, withDelay, withRepeat, withSequence, withTiming} from "react-native-reanimated";
 
 const SwipeUpToOpen = () => {
 
@@ -11,10 +11,20 @@ const SwipeUpToOpen = () => {
                 translateY: withRepeat(
                     withSequence(
                         withTiming(-15, { duration: 300 }),
-                    )
-                )
+                        withDelay(1500, withTiming(0, { duration: 3000 })),
+                        withTiming(-15)
+                    ),
+                    -1
+                ),
             }
-        ]
+        ],
+        opacity: withRepeat(
+            withSequence(
+                withDelay(1500, withTiming(0)),
+                withDelay(1500, withTiming(1)),
+            ),
+            -1
+        )
     }));
 
     return (
