@@ -5,11 +5,12 @@ import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
 import {useEffect, useState} from "react";
 import NotificationList from "./src/components/NotificationList";
-import Animated, {SlideInDown, SlideInUp} from "react-native-reanimated";
+import Animated, {interpolate, SlideInDown, SlideInUp, useAnimatedStyle, useSharedValue} from "react-native-reanimated";
 import SwipeUpToOpen from "./src/components/SwipeUpToOpen";
 
 export default function App() {
     const [date, setDate] = useState(dayjs());
+    const footerVisibility = useSharedValue(1);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -18,12 +19,21 @@ export default function App() {
         return () => clearInterval(interval);
     }, []);
 
+    const animatedFooterStyle = useAnimatedStyle(() => ({
+        // footer range, from 0 to 1, and then footer opacity is 0, margin is -85 (full), then footer visibility is 1, we want margin to be 0
+        marginTop: interpolate(footerVisibility.value, [0, 1], [-85, 0]),
+        opacity: footerVisibility.value,
+    }));
+
     return (
         <ImageBackground source={wallpaper} style={styles.container} className="">
             {/* Notification List*/}
             <NotificationList
+                footerVisibility={footerVisibility}
                 ListHeaderComponent={() => (
-                    <Animated.View entering={SlideInUp} style={styles.header}>
+                    <Animated.View
+                        // entering={SlideInUp}
+                        style={styles.header}>
                         <Ionicons name="ios-lock-closed" size={20} color="white" />
                         <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
                         <Text style={styles.time}>{date.format("hh:mm")}</Text>
@@ -31,7 +41,7 @@ export default function App() {
                 )}
             />
 
-            <Animated.View entering={SlideInDown} style={styles.footer}>
+            <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
                 <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
                     <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
                 </TouchableOpacity>

@@ -16,15 +16,15 @@ const SwipeUpToOpen = () => {
                     ),
                     -1
                 ),
-            }
+            },
         ],
         opacity: withRepeat(
             withSequence(
                 withDelay(1500, withTiming(0)),
-                withDelay(1500, withTiming(1)),
+                withDelay(3000, withTiming(1))
             ),
             -1
-        )
+        ),
     }));
 
     return (
