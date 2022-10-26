@@ -32,7 +32,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
     },
     header: {
         alignItems: 'center',
@@ -52,7 +52,11 @@ const styles = StyleSheet.create({
     },
     footer: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: 'auto',
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        height: 75,
     },
     icon: {
         backgroundColor: '#00000050',
