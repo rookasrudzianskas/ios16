@@ -41,17 +41,17 @@ export default function App() {
                 )}
             />
 
-            <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
-                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                    <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
-                </TouchableOpacity>
+            {/*<Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>*/}
+            {/*    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>*/}
+            {/*        <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />*/}
+            {/*    </TouchableOpacity>*/}
 
-                <SwipeUpToOpen />
+            {/*    <SwipeUpToOpen />*/}
 
-                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                    <Ionicons name={"ios-camera"} size={24} color={'white'} />
-                </TouchableOpacity>
-            </Animated.View>
+            {/*    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>*/}
+            {/*        <Ionicons name={"ios-camera"} size={24} color={'white'} />*/}
+            {/*    </TouchableOpacity>*/}
+            {/*</Animated.View>*/}
             <StatusBar style="light" />
         </ImageBackground>
     );

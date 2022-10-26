@@ -12,20 +12,30 @@ const NotificationItem = ({data, index, listVisibility}) => {
 
     const animatedStyle = useAnimatedStyle(() => {
         return {
-            transform: [
-                {
-                    translateY: interpolate(listVisibility.value, [0, 1], [containerHeight - startPosition, 0])
-                },
-                {
-                    scale: interpolate(listVisibility.value, [0, 1], [0.8, 1])
-                },
-            ],
-            opacity: listVisibility.value,
+            opacity: 1,
         }
     });
 
+    // const animatedStyle = useAnimatedStyle(() => {
+    //     return {
+    //         transform: [
+    //             {
+    //                 translateY: interpolate(listVisibility.value, [0, 1], [containerHeight - startPosition, 0])
+    //             },
+    //             {
+    //                 scale: interpolate(listVisibility.value, [0, 1], [0.8, 1])
+    //             },
+    //         ],
+    //         opacity: listVisibility.value,
+    //     }
+    // });
+
+
+
     return (
-        <Animated.View style={[styles.container, animatedStyle]}>
+        <Animated.View style={[styles.container,
+            animatedStyle
+        ]}>
             {/*<TouchableOpacity activeOpacity={0.7} style={styles.container}>*/}
                 <Image source={data.icon} style={styles.icon} />
                 <View style={{flex: 1}}>
