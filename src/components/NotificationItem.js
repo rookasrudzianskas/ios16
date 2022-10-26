@@ -8,6 +8,7 @@ import Animated, {
     useDerivedValue,
     withTiming
 } from "react-native-reanimated";
+
 export const NOTIFICATION_HEIGHT = 80;
 
 const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) => {
