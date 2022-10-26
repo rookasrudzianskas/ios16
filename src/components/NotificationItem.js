@@ -28,6 +28,14 @@ const NotificationItem = ({data, index, listVisibility, scrollY}) => {
                         [-NOTIFICATION_HEIGHT / 2, 0],
                         Extrapolate.CLAMP
                     )
+                },
+                {
+                    scale: interpolate(
+                        scrollY.value,
+                        [pos1, pos2],
+                        [0.8, 1],
+                        Extrapolate.CLAMP
+                    ),
                 }
             ]
         }
