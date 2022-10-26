@@ -5,13 +5,18 @@ import LockScreen from "./src/screens/LockScreen";
 export default function App() {
 
     return (
-        <>
-            <LockScreen />
+        <View style={styles.container}>
+            {/*<LockScreen />*/}
+            <Text>Hello Bro!</Text>
             <StatusBar style="light" />
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 });
