@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import wallpaper from './assets/images/wallpaper.webp';
-import {Ionicons} from '@expo/vector-icons';
+import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 
 export default function App() {
     return (
@@ -10,6 +10,18 @@ export default function App() {
                 <Ionicons name="ios-lock-closed" size={20} color="white" />
                 <Text style={styles.date}>Friday, 30 September</Text>
                 <Text style={styles.time}>11:54</Text>
+            </View>
+
+            {/* Notification List*/}
+
+            <View style={styles.footer}>
+                <TouchableOpacity activeOpacity={0.7}>
+                    <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
+                </TouchableOpacity>
+
+                <TouchableOpacity activeOpacity={0.7}>
+                    <Ionicons name={"ios-camera"} size={24} color={'white'} />
+                </TouchableOpacity>
             </View>
 
             <StatusBar style="auto" />
