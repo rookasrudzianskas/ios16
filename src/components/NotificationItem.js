@@ -1,18 +1,35 @@
 //@ts-nocheck
 import React from 'react';
 import {Text, View, StyleSheet, Image, Pressable, TouchableOpacity, useWindowDimensions} from 'react-native';
-import Animated, {interpolate, useAnimatedStyle, withTiming} from "react-native-reanimated";
+import Animated, {Extrapolate, interpolate, useAnimatedStyle, withTiming} from "react-native-reanimated";
 
 export const NOTIFICATION_HEIGHT = 80;
 
-const NotificationItem = ({data, index, listVisibility}) => {
+const NotificationItem = ({data, index, listVisibility, scrollY}) => {
     const { height } = useWindowDimensions();
     const containerHeight = height - 250 - 85;
     const startPosition = NOTIFICATION_HEIGHT  * index;
 
     const animatedStyle = useAnimatedStyle(() => {
+        const pos1 = startPosition - containerHeight;
+        const pos2 = startPosition + NOTIFICATION_HEIGHT - containerHeight;
+
         return {
-            opacity: 1,
+            opacity: interpolate(scrollY.value,
+                [
+                        pos1,
+                        pos2
+                    ],
+                [0, 1]),
+            transform: [
+                {
+                    translateY: interpolate(scrollY.value,
+                        [pos1, pos2],
+                        [-NOTIFICATION_HEIGHT / 2, 0],
+                        Extrapolate.CLAMP
+                    )
+                }
+            ]
         }
     });
 

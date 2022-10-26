@@ -7,11 +7,14 @@ import Animated, {useAnimatedScrollHandler, useSharedValue, withSpring, withTimi
 
 const NotificationList = ({ footerVisibility, ...flatListProps }) => {
     const {height} = useWindowDimensions();
-    const listVisibility = useSharedValue(1)
+    const listVisibility = useSharedValue(1);
+    const scrollY = useSharedValue(0);
+
     const handler = useAnimatedScrollHandler({
         onScroll: (event) => {
             // console.log(event.contentOffset.y);
             const y = event.contentOffset.y;
+            scrollY.value = y;
             if(y < 10) {
                 // have the footer open
                 footerVisibility.value = withTiming(1, { duration: 300 });
@@ -37,7 +40,7 @@ const NotificationList = ({ footerVisibility, ...flatListProps }) => {
             data={notifications}
             showsVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
-                <NotificationItem data={item} index={index} listVisibility={listVisibility} />
+                <NotificationItem data={item} index={index} listVisibility={listVisibility} scrollY={scrollY} />
             )}
             {...flatListProps}
             onScroll={handler}
