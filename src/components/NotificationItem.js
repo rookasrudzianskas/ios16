@@ -1,19 +1,31 @@
 //@ts-nocheck
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Image,Pressable, TouchableOpacity} from 'react-native';
+import Animated, {interpolate, useAnimatedStyle, withTiming} from "react-native-reanimated";
 
 export const NOTIFICATION_HEIGHT = 80;
 
-const NotificationItem = ({data, index}) => {
+const NotificationItem = ({data, index, listVisibility}) => {
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{
+                translateY: interpolate(listVisibility.value, [0, 1], [600, 0])
+            }]
+        }
+    });
+
     return (
-        <TouchableOpacity activeOpacity={0.7} style={styles.container}>
-            <Image source={data.icon} style={styles.icon} />
-            <View style={{flex: 1}}>
-                <Text style={styles.title}>{data.title || 'Loading..'}</Text>
-                <Text style={styles.subtitle} numberOfLines={2}>{data.subtitle || 'Loading..'}</Text>
-            </View>
-            <Text style={styles.time}>{data.createdAt || 'Loading..'} ago</Text>
-        </TouchableOpacity>
+        <Animated.View style={[styles.container, animatedStyle]}>
+            {/*<TouchableOpacity activeOpacity={0.7} style={styles.container}>*/}
+                <Image source={data.icon} style={styles.icon} />
+                <View style={{flex: 1}}>
+                    <Text style={styles.title}>{data.title || 'Loading..'}</Text>
+                    <Text style={styles.subtitle} numberOfLines={2}>{data.subtitle || 'Loading..'}</Text>
+                </View>
+                <Text style={styles.time}>{data.createdAt || 'Loading..'} ago</Text>
+            {/*</TouchableOpacity>*/}
+        </Animated.View>
     );
 };
 
