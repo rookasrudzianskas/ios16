@@ -1,19 +1,19 @@
 //@ts-nocheck
 import React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 export const NOTIFICATION_HEIGHT = 80;
 
 const NotificationItem = ({data, index}) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.container}>
             <Image source={data.icon} style={styles.icon} />
             <View style={{flex: 1}}>
                 <Text style={styles.title}>{data.title || 'Loading..'}</Text>
                 <Text style={styles.subtitle} numberOfLines={2}>{data.subtitle || 'Loading..'}</Text>
             </View>
             <Text style={styles.time}>{data.createdAt || 'Loading..'} ago</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 
