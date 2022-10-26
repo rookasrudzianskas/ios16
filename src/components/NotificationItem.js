@@ -65,7 +65,6 @@ const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) 
         }
     });
 
-
     return (
         <Animated.View style={[styles.container,
             animatedStyle
