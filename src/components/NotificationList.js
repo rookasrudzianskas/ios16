@@ -19,7 +19,8 @@ const NotificationList = ({ footerVisibility, ...flatListProps }) => {
                 footerVisibility.value = withTiming(0, { duration: 300 });
             }
         }
-    })
+    });
+
     return (
         <Animated.FlatList
             data={notifications}
