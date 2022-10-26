@@ -6,9 +6,11 @@ import {Ionicons} from '@expo/vector-icons';
 export default function App() {
     return (
         <ImageBackground source={wallpaper} style={styles.container} className="">
-            <Ionicons name="ios-lock-closed" />
-            <Text>Friday, 30 September</Text>
-            <Text>3:26PM</Text>
+            <View style={styles.header}>
+                <Ionicons name="ios-lock-closed" size={20} color="white" />
+                <Text style={styles.date}>Friday, 30 September</Text>
+                <Text style={styles.time}>11:54</Text>
+            </View>
 
             <StatusBar style="auto" />
         </ImageBackground>
@@ -19,6 +21,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
     },
+    header: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 250,
+    },
+    date: {
+        color: '#C3FFFE',
+        fontSize: 20,
+        fontWeight: '500',
+        marginTop: 20,
+    },
+    time: {
+        fontSize: 82,
+        fontWeight: 'bold',
+        color: '#C3FFFE',
+    }
 });
