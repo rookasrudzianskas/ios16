@@ -4,6 +4,7 @@ import wallpaper from './assets/images/wallpaper.webp';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
 import {useEffect, useState} from "react";
+import NotificationList from "./src/components/NotificationList";
 
 export default function App() {
     const [date, setDate] = useState(dayjs());
@@ -17,13 +18,16 @@ export default function App() {
 
     return (
         <ImageBackground source={wallpaper} style={styles.container} className="">
-            <View style={styles.header}>
-                <Ionicons name="ios-lock-closed" size={20} color="white" />
-                <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
-                <Text style={styles.time}>{date.format("hh:mm")}</Text>
-            </View>
-
             {/* Notification List*/}
+            <NotificationList
+                ListHeaderComponent={() => (
+                    <View style={styles.header}>
+                        <Ionicons name="ios-lock-closed" size={20} color="white" />
+                        <Text style={styles.date}>{date.format("dddd, DD MMMM")}</Text>
+                        <Text style={styles.time}>{date.format("hh:mm")}</Text>
+                    </View>
+                )}
+            />
 
             <View style={styles.footer}>
                 <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
