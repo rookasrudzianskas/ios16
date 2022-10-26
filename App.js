@@ -9,7 +9,7 @@ export default function App() {
         <ImageBackground source={wallpaper} style={styles.container} className="">
             <View style={styles.header}>
                 <Ionicons name="ios-lock-closed" size={20} color="white" />
-                <Text style={styles.date}>Friday, 30 September</Text>
+                <Text style={styles.date}>{dayjs().format("dddd, DD MMMM")}</Text>
                 <Text style={styles.time}>{dayjs().format("hh:mm")}</Text>
             </View>
 
