@@ -1,14 +1,15 @@
 //@ts-nocheck
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
+import SensorAnimatedImage from "./SensorAnimatedImage";
 
 const Parallax = ({ layers }) => {
     return (
-        <View>
-            <Text>
-                byrookas 🚀
-            </Text>
-        </View>
+        <>
+            {layers.reverse().map((layer, index) => (
+                <SensorAnimatedImage key={`layer_${index}`} image={layer} order={index + 1} />
+            ))}
+        </>
     );
 };
 

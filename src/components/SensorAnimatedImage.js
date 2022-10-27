@@ -11,7 +11,7 @@ const IMAGE_OFFSET = 100;
 const PI = Math.PI;
 const HALF_PI = PI / 2;
 
-const SensorAnimatedImage = ({ image }) => {
+const SensorAnimatedImage = ({ image, order }) => {
     const {width, height} = useWindowDimensions();
     const sensor = useAnimatedSensor(SensorType.ROTATION);
 
@@ -20,9 +20,9 @@ const SensorAnimatedImage = ({ image }) => {
         // console.log("YAW >> ", yaw.toFixed(1),"PITCH >>> ", pitch.toFixed(1), "ROLL >> ", roll.toFixed(1));
         return {
             // does for the Y axis, the rotation of the phone
-            top: withTiming(interpolate(pitch, [-HALF_PI, HALF_PI], [-IMAGE_OFFSET * 2, 0]), { duration: 100 }),
+            top: withTiming(interpolate(pitch, [-HALF_PI, HALF_PI], [(-IMAGE_OFFSET * 2) / order, 0]), { duration: 100 }),
             // does for the X axis, the rotation of the phone
-            left: withTiming(interpolate(roll, [-PI, PI], [-IMAGE_OFFSET * 2, 0]), { duration: 100 }),
+            left: withTiming(interpolate(roll, [-PI, PI], [(-IMAGE_OFFSET * 2) / order, 0]), { duration: 100 }),
         };
     });
 
@@ -31,8 +31,8 @@ const SensorAnimatedImage = ({ image }) => {
             {/*<LockScreen />*/}
             <Animated.Image source={image} style={[
                 {
-                    width: width + 2 * IMAGE_OFFSET,
-                    height: height + 2 * IMAGE_OFFSET,
+                    width: width + (2 * IMAGE_OFFSET) / order,
+                    height: height + (2 * IMAGE_OFFSET) / order,
                     position: 'absolute',
                 },
                 imageStyle

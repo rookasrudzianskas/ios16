@@ -1,8 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
-import SensorAnimatedImage from "./src/components/SensorAnimatedImage";
-import bg from './assets/images/bg.jpeg';
-// import layer1 from './assets/images/Parallax/1.png';
+import {StyleSheet, View} from 'react-native';
 import layer1 from './assets/images/Parallax/2.png';
 import layer2 from './assets/images/Parallax/3.png';
 import layer3 from './assets/images/Parallax/4.png';
