@@ -52,11 +52,13 @@ const LockScreen = () => {
         onActive: (event) => {
             y.value = event.translationY;
         },
-        onEnd: () => {
-            if(y.value < -height / 2 ) {
-                y.value = -height;
+        onEnd: (event) => {
+            if(y.value < -height / 2 || event.velocityY < -500) {
+                // unlock
+                y.value = withTiming(-height, { duration: 300, easing: Easing.linear });
             } else {
-                y.value = 0;
+                // reset
+                y.value = withTiming(0, { easing: Easing.linear });
             }
         }
     })
@@ -95,14 +97,7 @@ const LockScreen = () => {
                 </Animated.View>
 
                 <PanGestureHandler onGestureEvent={unlockGestureHandler}>
-                    <Animated.View style={{
-                        backgroundColor: 'red',
-                        position: 'absolute',
-                        width: '100%',
-                        height: 100,
-                        bottom: 0,
-                        left: 0
-                    }}>
+                    <Animated.View style={styles.panGestureContainer}>
 
                     </Animated.View>
                 </PanGestureHandler>
@@ -152,5 +147,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
+    },
+    panGestureContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: 100,
+        bottom: 0,
+        left: 0
     }
 });
