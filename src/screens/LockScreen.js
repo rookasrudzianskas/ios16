@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import {useEffect, useMemo, useState} from "react";
 import NotificationList from "../components/NotificationList";
 import Animated, {
+    Easing,
     interpolate,
     SlideInDown,
     SlideInUp, useAnimatedGestureHandler,
@@ -38,7 +39,7 @@ const LockScreen = () => {
     const animatedContainerStyle = useAnimatedStyle(() => ({
         transform: [
             {
-                translateY: withTiming(y.value, { duration: 100}),
+                translateY: withTiming(y.value, { duration: 100, easing: Easing.linear}),
             }
         ]
     }));
