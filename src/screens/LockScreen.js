@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'stretch',
+        // width: '100%'
     },
     header: {
         alignItems: 'center',
