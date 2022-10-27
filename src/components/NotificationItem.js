@@ -8,6 +8,7 @@ import Animated, {
     useDerivedValue,
     withTiming
 } from "react-native-reanimated";
+import {BlurView} from "expo-blur";
 
 export const NOTIFICATION_HEIGHT = 80;
 
@@ -67,16 +68,18 @@ const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) 
     });
 
     return (
-        <AnimatedTouchable activeOpacity={0.7} style={[styles.container,
+        <AnimatedTouchable activeOpacity={0.7} style={[
             animatedStyle
         ]}>
             {/*<TouchableOpacity activeOpacity={0.7} style={styles.container}>*/}
-                <Image source={data.icon} style={styles.icon} />
-                <View style={{flex: 1}}>
-                    <Text style={styles.title}>{data.title || 'Loading..'}</Text>
-                    <Text style={styles.subtitle} numberOfLines={2}>{data.subtitle || 'Loading..'}</Text>
-                </View>
-                <Text style={styles.time}>{data.createdAt || 'Loading..'} ago</Text>
+                <BlurView intensity={100} tint={'dark'} style={styles.container}>
+                    <Image source={data.icon} style={styles.icon} />
+                    <View style={{flex: 1}}>
+                        <Text style={styles.title}>{data.title || 'Loading..'}</Text>
+                        <Text style={styles.subtitle} numberOfLines={2}>{data.subtitle || 'Loading..'}</Text>
+                    </View>
+                    <Text style={styles.time}>{data.createdAt || 'Loading..'} ago</Text>
+                </BlurView>
             {/*</TouchableOpacity>*/}
         </AnimatedTouchable>
     );
@@ -87,13 +90,14 @@ export default NotificationItem;
 const styles = StyleSheet.create({
     container: {
         height: NOTIFICATION_HEIGHT - 10,
-        backgroundColor: "#00000075",
+        // backgroundColor: "#00000075",
         margin: 5,
         marginHorizontal: 10,
         padding: 13,
         borderRadius: 20,
         flexDirection: "row",
         alignItems: "center",
+        overflow: 'hidden',
     },
     time: {
         color: "lightgray",
