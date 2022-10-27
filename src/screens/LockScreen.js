@@ -67,7 +67,14 @@ const LockScreen = () => {
             </Animated.View>
 
             <PanGestureHandler>
-                <Animated.View style={{backgroundColor: 'red', position: 'absolute', width: '100%', height: 100, bottom: 0, left: 0}}>
+                <Animated.View style={{
+                    backgroundColor: 'red',
+                    position: 'absolute',
+                    width: '100%',
+                    height: 100,
+                    bottom: 0,
+                    left: 0
+                }}>
 
                 </Animated.View>
             </PanGestureHandler>
