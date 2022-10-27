@@ -6,17 +6,18 @@ import layer3 from './assets/images/Parallax/4.png';
 import layer4 from './assets/images/Parallax/5.png';
 import Parallax from "./src/components/Parallax";
 import LockScreen from "./src/screens/LockScreen";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 
 export default function App() {
 
     return (
-        <View style={styles.container}>
+        <GestureHandlerRootView style={styles.container}>
             <LockScreen />
             {/*<SensorAnimatedImage image={bg} />*/}
             {/*<Parallax  layers={[layer1, layer2, layer3, layer4]} />*/}
             <StatusBar style="light" />
-        </View>
+        </GestureHandlerRootView>
     );
 }
 

@@ -14,6 +14,7 @@ import Animated, {
     useSharedValue
 } from "react-native-reanimated";
 import SwipeUpToOpen from "../components/SwipeUpToOpen";
+import {PanGestureHandler} from "react-native-gesture-handler";
 
 const LockScreen = () => {
     const [date, setDate] = useState(dayjs());
@@ -64,7 +65,13 @@ const LockScreen = () => {
                     <Ionicons name={"ios-camera"} size={24} color={'white'} />
                 </TouchableOpacity>
             </Animated.View>
-            <StatusBar style="light" />
+
+            <PanGestureHandler>
+                <Animated.View style={{backgroundColor: 'red', position: 'absolute', width: '100%', height: 100, bottom: 0, left: 0}}>
+
+                </Animated.View>
+            </PanGestureHandler>
+
         </ImageBackground>
     );
 }
