@@ -22,8 +22,8 @@ const LockScreen = () => {
     const [date, setDate] = useState(dayjs());
     const footerVisibility = useSharedValue(1);
     const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]));
-    const y = useSharedValue(0);
     const { height } = useWindowDimensions();
+    const y = useSharedValue(height);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -41,26 +41,29 @@ const LockScreen = () => {
     const animatedContainerStyle = useAnimatedStyle(() => ({
         transform: [
             {
-                translateY: withTiming(y.value, { duration: 100, easing: Easing.linear}),
+                translateY: withTiming(y.value - height, { duration: 100, easing: Easing.linear}),
             }
         ]
     }));
 
     const unlockGestureHandler = useAnimatedGestureHandler({
-        onStart: () => {
-            console.log('onStart');
-        },
         onActive: (event) => {
-            console.log(event)
-            y.value = event.y;
+            // console.log(event)
+            y.value = event.absoluteY;
         },
         onEnd: (event) => {
-            if(y.value < -height / 2 || event.velocityY < -500) {
+            if(event.velocityY < -500) {
                 // unlock
-                y.value = withTiming(-height, { duration: 300, easing: Easing.linear });
+                y.value = withTiming(0, { duration: 300, easing: Easing.linear });
+            } else if(event.velocityY > 500) {
+                // reset
+                y.value = withTiming(height, { easing: Easing.linear });
+            } else if(y.value < height / 2) {
+                // unlock
+                y.value = withTiming(0, { duration: 300, easing: Easing.linear });
             } else {
                 // reset
-                y.value = withTiming(0, { easing: Easing.linear });
+                y.value = withTiming(height, { easing: Easing.linear });
             }
         }
     })
@@ -167,19 +170,10 @@ const styles = StyleSheet.create({
         height: 200,
         bottom: 0,
         left: 0,
-        backgroundColor: "red",
         transform: [
             {
                 translateY: 100
             }
         ]
     },
-    // panGestureContainerLock: {
-    //     backgroundColor: 'blue',
-    //     position: 'absolute',
-    //     width: '100%',
-    //     height: 100,
-    //     top: 0,
-    //     left: 0,
-    // }
 });
