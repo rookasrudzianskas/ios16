@@ -8,14 +8,14 @@ const IMAGE_OFFSET = 300;
 
 export default function App() {
     const {width, height} = useWindowDimensions();
-    const sensor = useAnimatedSensor(SensorType.ROTATION, {interval: 1000});
+    const sensor = useAnimatedSensor(SensorType.ROTATION);
 
     const imageStyle = useAnimatedStyle(() => {
         const {yaw, pitch, roll} = sensor.sensor.value;
-        console.log("YAW >> ", yaw.toFixed(1),"PITCH >>> ", pitch.toFixed(1), "ROLL >> ", roll.toFixed(1));
+        // console.log("YAW >> ", yaw.toFixed(1),"PITCH >>> ", pitch.toFixed(1), "ROLL >> ", roll.toFixed(1));
         return {
-            top: -200,
-            left: 0
+            top: pitch * 50,
+            // left: roll * 50,
         };
     });
 
