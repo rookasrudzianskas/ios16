@@ -17,6 +17,7 @@ import Animated, {
 import SwipeUpToOpen from "../components/SwipeUpToOpen";
 import {PanGestureHandler} from "react-native-gesture-handler";
 import home2 from "../../assets/images/home2.jpg";
+import {BlurView} from "expo-blur";
 
 const LockScreen = () => {
     const [date, setDate] = useState(dayjs());
@@ -24,6 +25,7 @@ const LockScreen = () => {
     const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]));
     const { height } = useWindowDimensions();
     const y = useSharedValue(height);
+    const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -66,7 +68,7 @@ const LockScreen = () => {
                 y.value = withTiming(height, { easing: Easing.linear });
             }
         }
-    })
+    });
 
     const Header = useMemo(
         () => (
@@ -90,35 +92,41 @@ const LockScreen = () => {
                 {/*</PanGestureHandler>*/}
             </ImageBackground>
             {/* lock screen */}
-            <Animated.View style={[styles.container, animatedContainerStyle]}>
-                <ImageBackground source={wallpaper} style={styles.container} className="">
-                    {/* Notification List*/}
-                    <NotificationList
-                        footerVisibility={footerVisibility}
-                        footerHeight={footerHeight}
-                        ListHeaderComponent={Header}
-                    />
+            <AnimatedBlurView
+                // animatedProps={homeScreenBlur}
+                style={{ width: "100%", height: "100%", ...StyleSheet.absoluteFill }}
+            />
+                <Animated.View style={[styles.container, animatedContainerStyle]}>
+                    <ImageBackground source={wallpaper} style={styles.container} className="">
+                        <BlurView intensity={0}>
+                            {/* Notification List*/}
+                            <NotificationList
+                                footerVisibility={footerVisibility}
+                                footerHeight={footerHeight}
+                                ListHeaderComponent={Header}
+                            />
 
-                    <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
-                        <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                            <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
-                        </TouchableOpacity>
+                            <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
+                                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                                    <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
+                                </TouchableOpacity>
 
-                        <SwipeUpToOpen />
+                                <SwipeUpToOpen />
 
-                        <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                            <Ionicons name={"ios-camera"} size={24} color={'white'} />
-                        </TouchableOpacity>
-                    </Animated.View>
+                                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                                    <Ionicons name={"ios-camera"} size={24} color={'white'} />
+                                </TouchableOpacity>
+                            </Animated.View>
 
-                    <PanGestureHandler onGestureEvent={unlockGestureHandler}>
-                        <Animated.View style={styles.panGestureContainerUnlock}>
+                            <PanGestureHandler onGestureEvent={unlockGestureHandler}>
+                                <Animated.View style={styles.panGestureContainerUnlock}>
 
-                        </Animated.View>
-                    </PanGestureHandler>
+                                </Animated.View>
+                            </PanGestureHandler>
 
-                </ImageBackground>
-            </Animated.View>
+                        </BlurView>
+                    </ImageBackground>
+                </Animated.View>
         </>
     );
 }
