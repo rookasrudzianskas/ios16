@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import wallpaper from '../../assets/images/wallpaper.webp';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
@@ -22,6 +22,7 @@ const LockScreen = () => {
     const footerVisibility = useSharedValue(1);
     const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]));
     const y = useSharedValue(0);
+    const { height } = useWindowDimensions();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -52,7 +53,11 @@ const LockScreen = () => {
             y.value = event.translationY;
         },
         onEnd: () => {
-            console.log('onEnd');
+            if(y.value < -height / 2 ) {
+                y.value = -height;
+            } else {
+                y.value = 0;
+            }
         }
     })
 
