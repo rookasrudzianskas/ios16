@@ -52,7 +52,7 @@ const LockScreen = () => {
         },
         onActive: (event) => {
             console.log(event)
-            y.value = event.translationY;
+            y.value = event.y;
         },
         onEnd: (event) => {
             if(y.value < -height / 2 || event.velocityY < -500) {
@@ -80,11 +80,11 @@ const LockScreen = () => {
         <>
             {/* homeScreen */}
             <ImageBackground source={home2} style={{width: '100%', height: '100%', ...StyleSheet.absoluteFill}} >
-                <PanGestureHandler onGestureEvent={unlockGestureHandler}>
-                    <Animated.View style={[styles.panGestureContainerLock]}>
+                {/*<PanGestureHandler onGestureEvent={unlockGestureHandler}>*/}
+                {/*    <Animated.View style={[styles.panGestureContainerLock]}>*/}
 
-                    </Animated.View>
-                </PanGestureHandler>
+                {/*    </Animated.View>*/}
+                {/*</PanGestureHandler>*/}
             </ImageBackground>
             {/* lock screen */}
             <Animated.View style={[styles.container, animatedContainerStyle]}>
@@ -162,18 +162,24 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     panGestureContainerUnlock: {
-        position: 'absolute',
-        width: '100%',
-        height: 100,
+        position: "absolute",
+        width: "100%",
+        height: 200,
         bottom: 0,
-        left: 0
+        left: 0,
+        backgroundColor: "red",
+        transform: [
+            {
+                translateY: 100
+            }
+        ]
     },
-    panGestureContainerLock: {
-        backgroundColor: 'blue',
-        position: 'absolute',
-        width: '100%',
-        height: 100,
-        top: 0,
-        left: 0
-    }
+    // panGestureContainerLock: {
+    //     backgroundColor: 'blue',
+    //     position: 'absolute',
+    //     width: '100%',
+    //     height: 100,
+    //     top: 0,
+    //     left: 0,
+    // }
 });
