@@ -2,7 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import LockScreen from "./src/screens/LockScreen";
 import bg from './assets/images/bg.jpeg';
-import Animated, {interpolate, SensorType, useAnimatedSensor, useAnimatedStyle} from "react-native-reanimated";
+import Animated, {
+    interpolate,
+    SensorType,
+    useAnimatedSensor,
+    useAnimatedStyle,
+    withTiming
+} from "react-native-reanimated";
 
 const IMAGE_OFFSET = 100;
 const PI = Math.PI;
@@ -16,8 +22,10 @@ export default function App() {
         const {yaw, pitch, roll} = sensor.sensor.value;
         // console.log("YAW >> ", yaw.toFixed(1),"PITCH >>> ", pitch.toFixed(1), "ROLL >> ", roll.toFixed(1));
         return {
-            top: interpolate(pitch, [-HALF_PI, HALF_PI], [-IMAGE_OFFSET * 2, 0]),
-            left: interpolate(roll, [-PI, PI], [-IMAGE_OFFSET * 2, 0]),
+            // does for the Y axis, the rotation of the phone
+            top: withTiming(interpolate(pitch, [-HALF_PI, HALF_PI], [-IMAGE_OFFSET * 2, 0]), { duration: 100 }),
+            // does for the X axis, the rotation of the phone
+            left: withTiming(interpolate(roll, [-PI, PI], [-IMAGE_OFFSET * 2, 0]), { duration: 100 }),
         };
     });
 
