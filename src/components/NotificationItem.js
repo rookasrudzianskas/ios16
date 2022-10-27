@@ -67,6 +67,7 @@ const NotificationItem = ({data, index, listVisibility, scrollY, footerHeight}) 
         }
     });
 
+
     return (
         <AnimatedTouchable activeOpacity={0.7} style={[
             animatedStyle
