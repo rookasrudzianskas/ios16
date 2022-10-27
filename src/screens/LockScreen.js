@@ -51,7 +51,6 @@ const LockScreen = () => {
 
     const unlockGestureHandler = useAnimatedGestureHandler({
         onActive: (event) => {
-            // console.log(event)
             y.value = event.absoluteY;
         },
         onEnd: (event) => {
