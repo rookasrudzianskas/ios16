@@ -14,7 +14,6 @@ export default function App() {
 
     return (
         <GestureHandlerRootView style={styles.container}>
-            <Image source={home2} style={{width: '100%', height: '100%', ...StyleSheet.absoluteFill}} />
             <LockScreen />
             {/*<SensorAnimatedImage image={bg} />*/}
             {/*<Parallax  layers={[layer1, layer2, layer3, layer4]} />*/}

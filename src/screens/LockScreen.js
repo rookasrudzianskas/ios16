@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
+import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
 import wallpaper from '../../assets/images/wallpaper.webp';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import dayjs from "dayjs";
@@ -16,6 +16,7 @@ import Animated, {
 } from "react-native-reanimated";
 import SwipeUpToOpen from "../components/SwipeUpToOpen";
 import {PanGestureHandler} from "react-native-gesture-handler";
+import home2 from "../../assets/images/home2.jpg";
 
 const LockScreen = () => {
     const [date, setDate] = useState(dayjs());
@@ -75,35 +76,40 @@ const LockScreen = () => {
     );
 
     return (
-        <Animated.View style={[styles.container, animatedContainerStyle]}>
-            <ImageBackground source={wallpaper} style={styles.container} className="">
-                {/* Notification List*/}
-                <NotificationList
-                    footerVisibility={footerVisibility}
-                    footerHeight={footerHeight}
-                    ListHeaderComponent={Header}
-                />
+        <>
+            {/* homeScreen */}
+            <Image source={home2} style={{width: '100%', height: '100%', ...StyleSheet.absoluteFill}} />
+            {/* lock screen */}
+            <Animated.View style={[styles.container, animatedContainerStyle]}>
+                <ImageBackground source={wallpaper} style={styles.container} className="">
+                    {/* Notification List*/}
+                    <NotificationList
+                        footerVisibility={footerVisibility}
+                        footerHeight={footerHeight}
+                        ListHeaderComponent={Header}
+                    />
 
-                <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
-                    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                        <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
-                    </TouchableOpacity>
+                    <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
+                        <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                            <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
+                        </TouchableOpacity>
 
-                    <SwipeUpToOpen />
+                        <SwipeUpToOpen />
 
-                    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                        <Ionicons name={"ios-camera"} size={24} color={'white'} />
-                    </TouchableOpacity>
-                </Animated.View>
-
-                <PanGestureHandler onGestureEvent={unlockGestureHandler}>
-                    <Animated.View style={styles.panGestureContainer}>
-
+                        <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                            <Ionicons name={"ios-camera"} size={24} color={'white'} />
+                        </TouchableOpacity>
                     </Animated.View>
-                </PanGestureHandler>
 
-            </ImageBackground>
-        </Animated.View>
+                    <PanGestureHandler onGestureEvent={unlockGestureHandler}>
+                        <Animated.View style={styles.panGestureContainer}>
+
+                        </Animated.View>
+                    </PanGestureHandler>
+
+                </ImageBackground>
+            </Animated.View>
+        </>
     );
 }
 
