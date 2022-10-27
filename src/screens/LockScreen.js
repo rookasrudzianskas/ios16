@@ -9,7 +9,7 @@ import Animated, {
     Easing,
     interpolate,
     SlideInDown,
-    SlideInUp, useAnimatedGestureHandler,
+    SlideInUp, useAnimatedGestureHandler, useAnimatedProps,
     useAnimatedStyle,
     useDerivedValue,
     useSharedValue, withTiming
@@ -25,6 +25,7 @@ const LockScreen = () => {
     const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]));
     const { height } = useWindowDimensions();
     const y = useSharedValue(height);
+    // Creating animated component
     const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
     useEffect(() => {
@@ -70,6 +71,14 @@ const LockScreen = () => {
         }
     });
 
+    const homeScreenBlur = useAnimatedProps(() => ({
+        intensity: interpolate(y.value, [0, height], [0, 100]),
+    }));
+
+    const lockScreenBlur = useAnimatedProps(() => ({
+        intensity: interpolate(y.value, [0, height], [100, 0]),
+    }));
+
     const Header = useMemo(
         () => (
             <Animated.View entering={SlideInUp} style={styles.header}>
@@ -84,21 +93,22 @@ const LockScreen = () => {
     return (
         <>
             {/* homeScreen */}
-            <ImageBackground source={home2} style={{width: '100%', height: '100%', ...StyleSheet.absoluteFill}} >
-                {/*<PanGestureHandler onGestureEvent={unlockGestureHandler}>*/}
-                {/*    <Animated.View style={[styles.panGestureContainerLock]}>*/}
-
-                {/*    </Animated.View>*/}
-                {/*</PanGestureHandler>*/}
-            </ImageBackground>
+            <ImageBackground source={home2} style={{width: '100%', height: '100%', ...StyleSheet.absoluteFill}} />
             {/* lock screen */}
             <AnimatedBlurView
-                // animatedProps={homeScreenBlur}
+                animatedProps={homeScreenBlur}
                 style={{ width: "100%", height: "100%", ...StyleSheet.absoluteFill }}
             />
                 <Animated.View style={[styles.container, animatedContainerStyle]}>
                     <ImageBackground source={wallpaper} style={styles.container} className="">
-                        <BlurView intensity={0}>
+                        <AnimatedBlurView
+                            animatedProps={lockScreenBlur}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                ...StyleSheet.absoluteFill,
+                            }}
+                        />
                             {/* Notification List*/}
                             <NotificationList
                                 footerVisibility={footerVisibility}
@@ -123,8 +133,6 @@ const LockScreen = () => {
 
                                 </Animated.View>
                             </PanGestureHandler>
-
-                        </BlurView>
                     </ImageBackground>
                 </Animated.View>
         </>
