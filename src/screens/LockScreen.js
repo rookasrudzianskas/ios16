@@ -8,10 +8,10 @@ import NotificationList from "../components/NotificationList";
 import Animated, {
     interpolate,
     SlideInDown,
-    SlideInUp,
+    SlideInUp, useAnimatedGestureHandler,
     useAnimatedStyle,
     useDerivedValue,
-    useSharedValue
+    useSharedValue, withTiming
 } from "react-native-reanimated";
 import SwipeUpToOpen from "../components/SwipeUpToOpen";
 import {PanGestureHandler} from "react-native-gesture-handler";
@@ -19,7 +19,8 @@ import {PanGestureHandler} from "react-native-gesture-handler";
 const LockScreen = () => {
     const [date, setDate] = useState(dayjs());
     const footerVisibility = useSharedValue(1);
-    const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]))
+    const footerHeight = useDerivedValue(() => interpolate(footerVisibility.value, [0, 1], [0, 85]));
+    const y = useSharedValue(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -34,6 +35,26 @@ const LockScreen = () => {
         opacity: footerVisibility.value,
     }));
 
+    const animatedContainerStyle = useAnimatedStyle(() => ({
+        transform: [
+            {
+                translateY: withTiming(y.value, { duration: 100}),
+            }
+        ]
+    }));
+
+    const unlockGestureHandler = useAnimatedGestureHandler({
+        onStart: () => {
+            console.log('onStart');
+        },
+        onActive: (event) => {
+            y.value = event.translationY;
+        },
+        onEnd: () => {
+            console.log('onEnd');
+        }
+    })
+
     const Header = useMemo(
         () => (
             <Animated.View entering={SlideInUp} style={styles.header}>
@@ -46,40 +67,42 @@ const LockScreen = () => {
     );
 
     return (
-        <ImageBackground source={wallpaper} style={styles.container} className="">
-            {/* Notification List*/}
-            <NotificationList
-                footerVisibility={footerVisibility}
-                footerHeight={footerHeight}
-                ListHeaderComponent={Header}
-            />
+        <Animated.View style={[styles.container, animatedContainerStyle]}>
+            <ImageBackground source={wallpaper} style={styles.container} className="">
+                {/* Notification List*/}
+                <NotificationList
+                    footerVisibility={footerVisibility}
+                    footerHeight={footerHeight}
+                    ListHeaderComponent={Header}
+                />
 
-            <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
-                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                    <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
-                </TouchableOpacity>
+                <Animated.View entering={SlideInDown} style={[styles.footer, animatedFooterStyle]}>
+                    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                        <MaterialCommunityIcons name={"flashlight"} size={24} color={'white'} />
+                    </TouchableOpacity>
 
-                <SwipeUpToOpen />
+                    <SwipeUpToOpen />
 
-                <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
-                    <Ionicons name={"ios-camera"} size={24} color={'white'} />
-                </TouchableOpacity>
-            </Animated.View>
-
-            <PanGestureHandler>
-                <Animated.View style={{
-                    backgroundColor: 'red',
-                    position: 'absolute',
-                    width: '100%',
-                    height: 100,
-                    bottom: 0,
-                    left: 0
-                }}>
-
+                    <TouchableOpacity style={styles.icon} activeOpacity={0.7}>
+                        <Ionicons name={"ios-camera"} size={24} color={'white'} />
+                    </TouchableOpacity>
                 </Animated.View>
-            </PanGestureHandler>
 
-        </ImageBackground>
+                <PanGestureHandler onGestureEvent={unlockGestureHandler}>
+                    <Animated.View style={{
+                        backgroundColor: 'red',
+                        position: 'absolute',
+                        width: '100%',
+                        height: 100,
+                        bottom: 0,
+                        left: 0
+                    }}>
+
+                    </Animated.View>
+                </PanGestureHandler>
+
+            </ImageBackground>
+        </Animated.View>
     );
 }
 
